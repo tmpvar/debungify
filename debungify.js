@@ -4,7 +4,6 @@ var fs = require('fs');
 var path = require('path');
 var debung = path.join(__dirname, '/', 'debung.js');
 var handle = {}
-var debug = require('debug')('debungify')
 
 module.exports = transform
 
@@ -46,7 +45,7 @@ function transform(file) {
           handle[node.type](node, node.parent, node.source());
         }
       } else {
-        debug('missed', node.type)
+        console.log('missed', node.type)
       }
     }).toString();
 
