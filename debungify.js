@@ -33,27 +33,30 @@ function transform(file) {
   function end () {
     data = data.replace(/\/\/ *debung: *(.*)/g, 'debung.label("$1")')
 
-
-    var out = parser(data, function(node) {
-      if (!node.scopeDepth) {
-        node.scopeDepth = 0;
-      }
-
-      if (handle[node.type]) {
-        node.debunged = true;
-        if (!childOfDebung(node)) {
-          handle[node.type](node, node.parent, node.source());
+    try {
+      var out = parser(data, function(node) {
+        if (!node.scopeDepth) {
+          node.scopeDepth = 0;
         }
-      } else {
-        console.log('missed', node.type)
+
+        if (handle[node.type]) {
+          node.debunged = true;
+          if (!childOfDebung(node)) {
+            handle[node.type](node, node.parent, node.source());
+          }
+        } else {
+          console.log('missed', node.type)
+        }
+      }).toString();
+
+      if (out.indexOf('var debung') === -1) {
+        this.queue("var debung = require('" + debung + "');\n");
       }
-    }).toString();
 
-    if (out.indexOf('var debung') === -1) {
-      this.queue("var debung = require('" + debung + "');\n");
+      this.queue(out);
+    } catch (e) {
+      this.emit('error', e);
     }
-
-    this.queue(out);
     this.queue(null);
   }
 }
