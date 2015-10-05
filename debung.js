@@ -19,26 +19,26 @@ function clone(thing) {
   }
 }
 
-debunger.array = function (name, a) {
+debunger.array = function array(name, a) {
   flow.push([now(), depth, name, clone(a)])
   return a;
 }
 
-debunger.op = function (text, result) {
+debunger.op = function op(text, result) {
   flow.push([now(), depth, text, clone(result)])
   return result;
 }
 
-debunger.label = function (text) {
+debunger.label = function label(text) {
   flow.push([now(), depth, text])
 }
 
-debunger.value = function (text, result) {
+debunger.value = function value(text, result) {
   flow.push([now(), depth, text, clone(result)])
   return result;
 }
 
-debunger.wrap = function(name, ctx, args, fn) {
+debunger.wrap = function wrap(name, ctx, args, fn) {
   flow.push([now(), depth, 'wrap', name, clone(varargs(args))])
   depth++;
   var res = fn.call(ctx);
@@ -47,18 +47,22 @@ debunger.wrap = function(name, ctx, args, fn) {
   return res;
 }
 
-debunger.enterLoop = function() {
+debunger.enterLoop = function enterLoop() {
   flow.push([now(), depth, 'enter loop'])
   depth++
 }
 
-debunger.exitLoop = function() {
+debunger.exitLoop = function exitLoop() {
   depth--;
   flow.push([now(), depth, 'exit loop'])
 }
 
+debunger.reset = function resetFlow() {
+  flow = [];
+};
+
 // provide a safe haven from debunger mutations
-debunger.debug = function(fn) {
+debunger.debug = function debug(fn) {
   return fn()
 }
 

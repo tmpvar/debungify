@@ -16,8 +16,12 @@ for (var i = 0; i < 10; i++) {
 
 
 function callme(a) {
-  var j = [a, a+1, a+2]
+  var j = gimme([a, a+1, a+2])
   return j;
+}
+
+function gimme(a) {
+  return a;
 }
 
 debung.debug(function() {
