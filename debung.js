@@ -4,43 +4,46 @@ var debunger = module.exports = {};
 var flow = [];
 var depth = 0;
 
+function now() {
+  return window.performance.now() * 1000;
+}
 
 debunger.array = function (name, a) {
-  flow.push([Date.now(), depth, name, a.slice()])
+  flow.push([now(), depth, name, a.slice()])
   return a;
 }
 
 debunger.op = function (text, result) {
-  flow.push([Date.now(), depth, text, result])
+  flow.push([now(), depth, text, result])
   return result;
 }
 
 debunger.label = function (text) {
-  flow.push([Date.now(), depth, text])
+  flow.push([now(), depth, text])
 }
 
 debunger.value = function (text, result) {
-  flow.push([Date.now(), depth, text, result])
+  flow.push([now(), depth, text, result])
   return result;
 }
 
 debunger.wrap = function(name, ctx, args, fn) {
-  flow.push([Date.now(), depth, 'wrap', name, varargs(args)])
+  flow.push([now(), depth, 'wrap', name, varargs(args)])
   depth++;
   var res = fn.call(ctx);
   depth--;
-  flow.push([Date.now(), depth, 'unwrap', name, res])
+  flow.push([now(), depth, 'unwrap', name, res])
   return res;
 }
 
 debunger.enterLoop = function() {
-  flow.push([Date.now(), depth, 'enter loop'])
+  flow.push([now(), depth, 'enter loop'])
   depth++
 }
 
 debunger.exitLoop = function() {
   depth--;
-  flow.push([Date.now(), depth, 'exit loop'])
+  flow.push([now(), depth, 'exit loop'])
 }
 
 // provide a safe haven from debunger mutations
