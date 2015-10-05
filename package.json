@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "debungify",
   "dependencies": {
+    "clone": "^1.0.2",
     "escodegen": "^1.7.0",
     "falafel": "^1.2.0",
     "through": "^2.3.8",

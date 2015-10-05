@@ -1,5 +1,5 @@
 var parser = require('falafel');
-var through = require('through')
+var through = require('through');
 var fs = require('fs');
 var path = require('path');
 var debung = path.join(__dirname, '/', 'debung.js');

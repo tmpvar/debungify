@@ -4,16 +4,11 @@ var a = [1]
 var j = 0;
 // a[0]++;
 
-for (var i = 0; i < 2; i++) {
+for (var i = 0; i < 10; i++) {
   // debung: inside my debug loop
   j = j + 1;
   j = i + 2;
-
-  while(j--) {
-    // TODO: add function wrapper
-    callme(i)
-  }
-
+  callme(i)
 }
 
 // while(j--) { console.log('here') }
@@ -21,14 +16,14 @@ for (var i = 0; i < 2; i++) {
 
 
 function callme(a) {
-  return a-1;
+  var j = [a, a+1, a+2]
+  return j;
 }
 
 debung.debug(function() {
   var depth = 0;
 
   debung.flow(function(o) {
-console.log(o)
     var padding = ''
     for (var i=0; i<o[1]; i++) {
       padding += '  |';

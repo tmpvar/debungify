@@ -1,20 +1,23 @@
 
-var varargs = require('varargs')
+var varargs = require('varargs');
+var clone = require('clone');
+
 var debunger = module.exports = {};
+
 var flow = [];
 var depth = 0;
 
 function now() {
-  return window.performance.now() * 1000;
+  return typeof window !== 'undefined' ? window.performance.now() * 1000 : Date.now();
 }
 
 debunger.array = function (name, a) {
-  flow.push([now(), depth, name, a.slice()])
+  flow.push([now(), depth, name, clone(a)])
   return a;
 }
 
 debunger.op = function (text, result) {
-  flow.push([now(), depth, text, result])
+  flow.push([now(), depth, text, clone(result)])
   return result;
 }
 
@@ -23,16 +26,16 @@ debunger.label = function (text) {
 }
 
 debunger.value = function (text, result) {
-  flow.push([now(), depth, text, result])
+  flow.push([now(), depth, text, clone(result)])
   return result;
 }
 
 debunger.wrap = function(name, ctx, args, fn) {
-  flow.push([now(), depth, 'wrap', name, varargs(args)])
+  flow.push([now(), depth, 'wrap', name, clone(varargs(args))])
   depth++;
   var res = fn.call(ctx);
   depth--;
-  flow.push([now(), depth, 'unwrap', name, res])
+  flow.push([now(), depth, 'unwrap', name, clone(res)])
   return res;
 }
 
