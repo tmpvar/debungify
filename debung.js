@@ -1,6 +1,6 @@
 
 var varargs = require('varargs');
-var clone = require('clone');
+var deepClone = require('clone');
 
 var debunger = module.exports = {};
 
@@ -9,6 +9,14 @@ var depth = 0;
 
 function now() {
   return typeof window !== 'undefined' ? window.performance.now() * 1000 : Date.now();
+}
+
+function clone(thing) {
+  try {
+    return deepClone(thing);
+  } catch (e) {
+    return thing;
+  }
 }
 
 debunger.array = function (name, a) {
