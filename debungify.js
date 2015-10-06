@@ -145,9 +145,21 @@ handle.BlockStatement = function(n, p, source) {
 
 
   } else if (p.type === 'FunctionDeclaration' || p.type === 'FunctionExpression') {
+    var name = '';
+    if (p.id) {
+      name = p.id.name
+    } else if (p.parent.key) {
+      if (p.parent.parent && p.parent.parent.parent && p.parent.parent.parent.id) {
+        name += p.parent.parent.parent.id.name + '.'
+      }
+      name += p.parent.key.name
+    } else {
+      console.log('FUNCTION ODDITY', p)
+    }
+
     var newSource = [
       '{',
-      '  return debung.wrap("' + p.id.name + '", this, arguments, function() {',
+      '  return debung.wrap("' + name + '", this, arguments, function() {',
       '    ' + source.replace(/^\{|\}$/g, '').trim(),
       '  })',
       '}',
