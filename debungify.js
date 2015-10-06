@@ -153,6 +153,11 @@ handle.BlockStatement = function(n, p, source) {
         name += p.parent.parent.parent.id.name + '.'
       }
       name += p.parent.key.name
+    } else if (p.parent.type === 'AssignmentExpression') {
+      if (p.parent.left.type == 'MemberExpression') {
+        var object = p.parent.left
+        name += object.object.object.name + '#' + object.property.name;
+      }
     } else {
       console.log('FUNCTION ODDITY', p)
     }
