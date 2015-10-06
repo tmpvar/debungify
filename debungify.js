@@ -144,7 +144,7 @@ handle.BlockStatement = function(n, p, source) {
     n.update(newSource);
 
 
-  } else if (p.type === 'FunctionDeclaration') {
+  } else if (p.type === 'FunctionDeclaration' || p.type === 'FunctionExpression') {
     var newSource = [
       '{',
       '  return debung.wrap("' + p.id.name + '", this, arguments, function() {',
