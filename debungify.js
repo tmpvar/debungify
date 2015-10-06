@@ -65,7 +65,7 @@ handle.BinaryExpression = function(n, p, source) {
   var left = n.left.value || n.left.name;
   var right = n.right.value || n.right.name;
   if (!n.left.value) {
-    console.log('BINARY', n);
+    // console.log('BINARY', n);
   }
 
   var op = [left, n.operator, right].join(' ');

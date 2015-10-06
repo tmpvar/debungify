@@ -10,7 +10,7 @@ b.transform(debungify)
 b.bundle(function done(e, r) {
   if (e) throw e;
   r = r.toString();
-  console.log(beautify(r))
+  // console.log(beautify(r))
   eval(r);
 })
 
