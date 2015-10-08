@@ -39,7 +39,7 @@ debunger.value = function value(text, result) {
 }
 
 debunger.wrap = function wrap(name, ctx, args, fn) {
-  flow.push([now(), depth, 'wrap', name, clone(varargs(args))])
+  flow.push([now(), depth, 'wrap', name, clone(varargs(args)), ctx])
   depth++;
   var res = fn.call(ctx);
   depth--;
